@@ -1,3 +1,5 @@
+package chat;
+
 import java.io.*;
 
 public class Message implements Serializable {
@@ -8,18 +10,18 @@ public class Message implements Serializable {
 	// WHOISIN to receive the list of the users connected
 	// MESSAGE an ordinary message
 	// LOGOUT to disconnect from the Server
-	static final int MESSAGE = 1, LOGOUT = 2;
+	public static final int MESSAGE = 1, LOGOUT = 2;
 	private int type;
 	private String message;
 	
-	Message(int type, String message) {
+	public Message(int type, String message) {
 		this.type = type;
 		this.message = message;
 	}
-	int getType() {
+	public int getType() {
 		return type;
 	}
-	String getMessage() {
+	public String getMessage() {
 		return message;
 	}
 }

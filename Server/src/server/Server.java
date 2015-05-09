@@ -1,4 +1,6 @@
+package server;
 
+import chat.Message;
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -25,9 +27,13 @@ public class Server {
                 if(turnOff == true)
                     break;
                 ClientThread ct;
+                System.out.println("Got here.");
                 ct = new ClientThread(s);
+                System.out.println("Got here..");
                 clients.add(ct);
+                System.out.println("Got here...");
                 ct.start();
+                System.out.println("Got here....");
             }
             //server stopped
             try {
@@ -90,14 +96,19 @@ public class Server {
         private ClientThread(Socket s) {
             id = ++currentId;
             this.socket = s;
+            System.out.println("Got here+");
             try {
-                ois = new ObjectInputStream(socket.getInputStream());
-                oos = new ObjectOutputStream(socket.getOutputStream());
+                ois = new ObjectInputStream(s.getInputStream());
+                System.out.println("Got here++");
+                oos = new ObjectOutputStream(s.getOutputStream());
+                System.out.println("Got here+++");
                 username = (String)ois.readObject();
+                System.out.println("Got here++++");
                 System.out.println(username + "connected to chat.");
+                System.out.println("Got here+++++");
             }
             catch (IOException | ClassNotFoundException e) {
-                System.out.println("Exception creating client.");
+                System.out.println("Exception creating client." + e);
             }
         }
         
@@ -108,7 +119,7 @@ public class Server {
                 socket.close();
             }
             catch (Exception e) {
-                System.out.println("Could not close client.");
+                System.out.println("Could not close client." + e);
             }
         }
         
