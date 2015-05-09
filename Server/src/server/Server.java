@@ -27,13 +27,9 @@ public class Server {
                 if(turnOff == true)
                     break;
                 ClientThread ct;
-                System.out.println("Got here.");
                 ct = new ClientThread(s);
-                System.out.println("Got here..");
                 clients.add(ct);
-                System.out.println("Got here...");
                 ct.start();
-                System.out.println("Got here....");
             }
             //server stopped
             try {
@@ -57,7 +53,7 @@ public class Server {
         Date dNow = new Date( );
         SimpleDateFormat ft = new SimpleDateFormat ("yyyy.MM.dd hh:mm:ss");
         String time = ft.format(dNow);
-        System.out.println(time + ":" + message);
+        System.out.println(time + " " + message);
         for(int i = 0 ; i < clients.size() ; i++) {
             ClientThread client = clients.get(i);
             if(client.sendmsg(message) == false) {
@@ -96,16 +92,11 @@ public class Server {
         private ClientThread(Socket s) {
             id = ++currentId;
             this.socket = s;
-            System.out.println("Got here+");
             try {
-                ois = new ObjectInputStream(s.getInputStream());
-                System.out.println("Got here++");
-                oos = new ObjectOutputStream(s.getOutputStream());
-                System.out.println("Got here+++");
+                oos = new ObjectOutputStream(socket.getOutputStream());
+                ois = new ObjectInputStream(socket.getInputStream());//wtf de ce nu merg astea invers?
                 username = (String)ois.readObject();
-                System.out.println("Got here++++");
-                System.out.println(username + "connected to chat.");
-                System.out.println("Got here+++++");
+                System.out.println(username + " connected to chat.");
             }
             catch (IOException | ClassNotFoundException e) {
                 System.out.println("Exception creating client." + e);

@@ -4,6 +4,7 @@ import chat.Message;
 import java.net.*;
 import java.io.*;
 import java.util.*;
+import java.lang.Math;
 
 public class Client {
     private ObjectInputStream ois;
@@ -63,7 +64,9 @@ public class Client {
     public static void main(String[] args) {
         int portn = 23352;
         String serverAdress = "localhost";
-        String userName = "anonymous";
+        Random rand = new Random();
+        int randomNum = rand.nextInt((9999 - 1000) + 1) + 1000;
+        String userName = "anonymous" + randomNum;
         if(args.length > 0)
             userName = args[0];
         if(args.length > 1)
@@ -73,6 +76,7 @@ public class Client {
         Client client = new Client(serverAdress, portn, userName);
         if(client.start() == false)
             return;
+        System.out.println("You are: " + userName);
         Scanner sc = new Scanner(System.in);
         while(true) {
             System.out.print("- ");
@@ -99,6 +103,7 @@ public class Client {
                     System.out.print("- ");
                 }catch (IOException | ClassNotFoundException e) {
                     System.out.println("Server closed connection: " + e);
+                    break;
                 }
             }
         }
